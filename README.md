@@ -1,3 +1,2 @@
 # api-mongodb
-make restfull API with MongoDB
-Wirh Mongodb in localhost
+Make restfull API with MongoDB in localhost
