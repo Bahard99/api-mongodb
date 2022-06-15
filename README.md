@@ -1,2 +1,2 @@
-# api-mongodb
-Make restfull API with MongoDB in localhost
+# api-mongodb GOlang
+Make restfull API with MongoDB GOlang
