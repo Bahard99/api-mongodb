@@ -7,7 +7,7 @@ POST (http://localhost:8080/person)
 ======RESULT
 ![golang-mongodb-2](https://user-images.githubusercontent.com/83685852/177965969-f94d121a-3447-44ac-a013-2ebf33100202.png)  
   
-GET (http://localhost:8080/person/:id?)
+GET (http://localhost:8080/person/:id?)  
 ======POSTMAN
 1. Get All  
 ![golang-mongodb-3](https://user-images.githubusercontent.com/83685852/177972335-254f62bf-3bdf-4e21-b7d0-c29b6872ee8b.png)
