@@ -9,6 +9,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+type Response struct {
+	InsertedID		string	`json:"insertedid"`
+	DeletedCount	int		`json:"deletedcount"`
+}
+
 func main()  {
 	app := fiber.New()
 	app.Get("/person/:id?", getPerson)
@@ -34,8 +39,11 @@ func createPerson(c *fiber.Ctx)  {
 		return
 	}
 
-	response, _ := json.Marshal(res)
-	c.Send(response)
+	var response Response
+	resp, _ := json.Marshal(res)
+
+	json.Unmarshal(resp, &response)
+	c.Send("Success Inserted with ID ", response.InsertedID)
 }
 
 func getPerson(c *fiber.Ctx)  {
@@ -45,6 +53,7 @@ func getPerson(c *fiber.Ctx)  {
 		return
 	}
 
+	// idcoba, _ := primitive.ObjectIDFromHex("0")
 	var filter bson.M = bson.M{}
 
 	if c.Params("id") != "" {
@@ -64,7 +73,8 @@ func getPerson(c *fiber.Ctx)  {
 	cur.All(context.Background(), &results)
 
 	if results == nil {
-		c.SendStatus(404)
+		// c.SendStatus(404)
+		c.Status(404).Send("NO DATA FOUND")
 		return
 	}
 
@@ -78,6 +88,7 @@ func updatePerson(c *fiber.Ctx)  {
 		c.Status(500).Send(err)
 		return
 	}
+	
 	var person Person
 	json.Unmarshal([]byte(c.Body()), &person)
 
@@ -92,8 +103,11 @@ func updatePerson(c *fiber.Ctx)  {
 		return
 	}
 
-	response, _ := json.Marshal(res)
-	c.Send(response)
+	var response Response
+	resp, _ := json.Marshal(res)
+
+	json.Unmarshal(resp, &response)
+	c.Send("Success Update with ID ", response.InsertedID)
 }
 
 func deletePerson(c *fiber.Ctx)  {
@@ -110,6 +124,9 @@ func deletePerson(c *fiber.Ctx)  {
 		return
 	}
 
-	jsonResponse, _ := json.Marshal(res)
-	c.Send(jsonResponse)
+	var response Response
+	resp, _ := json.Marshal(res)
+
+	json.Unmarshal(resp, &response)
+	c.Send("Success Delete ", response.DeletedCount, " Data")
 }
